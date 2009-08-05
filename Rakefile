@@ -5,7 +5,7 @@ require 'hoe'
 
 Hoe.plugin :seattlerb
 
-Hoe.spec 'omnifocus_bugzilla' do
+Hoe.spec 'omnifocus-bugzilla' do
   developer('aja', 'kushali@rubyforge.org')
 
   self.rubyforge_name = 'seattlerb'
