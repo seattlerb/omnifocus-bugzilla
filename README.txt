@@ -1,32 +1,31 @@
 = omnifocus_bugzilla
 
-* FIX (url)
+* http://rubyforge.org/projects/seattlerb
 
 == DESCRIPTION:
 
-FIX (describe your package)
+Plugin for omnifocus gem to provide bugzilla BTS synchronization.
+
+The first time this runs it creates a yaml file in your home directory
+for the bugzilla url and username.
 
 == FEATURES/PROBLEMS:
 
-* FIX (list of features or problems)
-
-== SYNOPSIS:
-
-  FIX (code sample of usage)
+* Provides bugzilla BTS synchronization.
 
 == REQUIREMENTS:
 
-* FIX (list of requirements)
+* omnifocus
 
 == INSTALL:
 
-* FIX (sudo gem install, anything else)
+* sudo gem install omnifocus-bugzilla
 
 == LICENSE:
 
 (The MIT License)
 
-Copyright (c) 2009 FIX
+Copyright (c) 2009 Aja Hammerly
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
