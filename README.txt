@@ -7,7 +7,23 @@
 Plugin for omnifocus gem to provide bugzilla BTS synchronization.
 
 The first time this runs it creates a yaml file in your home directory
-for the bugzilla url and username.
+for the bugzilla url, username, and queries.
+
+The queries config is optional.  If it is not included bugzilla-omnifocus will
+pull all active bugs assigned to the specified user.
+
+To use a custom query or multiple queries you must include a queries parameter
+in your config.
+
+The queries config is an array of strings.  Each string is the query string
+portion of the bugzilla search results url.  Its easiest to create your search
+in bugzilla and then paste the portion of the url after the question mark into
+the config file.
+
+Example:
+:bugzilla_url: http://bugs/buglist.cgi
+:username: aja
+:queries: ["bug_status=NEW", "bug_status=CLOSED"]
 
 == FEATURES/PROBLEMS:
 

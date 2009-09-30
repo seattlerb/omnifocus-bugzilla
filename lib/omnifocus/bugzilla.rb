@@ -1,5 +1,5 @@
 module OmniFocus::Bugzilla
-  VERSION = '1.0.0'
+  VERSION = '1.1.0'
 
   def load_or_create_config
     path   = File.expand_path "~/.omnifocus-bugzilla.yml"
@@ -25,10 +25,24 @@ module OmniFocus::Bugzilla
     config       = load_or_create_config
     bugzilla_url = config[:bugzilla_url]
     username     = config[:username]
+    default_query = "bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&emailassigned_to1=1&emailtype1=substring&email1=#{username}"
 
-    results = mechanize.get "#{bugzilla_url}?bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&emailassigned_to1=1&emailtype1=substring&email1=#{username}"
+    unless config[:queries]
+      process_query_results(bugzilla_url, default_query)
+    else
+      queries = config[:queries]
+      queries.each do |q|
+        process_query_results(bugzilla_url, q)
+      end
+    end
+
+  end
+
+  def process_query_results(bugzilla_url, query)
+    results = mechanize.get "#{bugzilla_url}?#{query}"
 
     bugs = results.root.xpath "//table[@class='bz_buglist']/tr[td]"
+
     bugs.each do |bug|
       bug_number = $1 if bug.inner_html =~ /show_bug.cgi\?id=(\d*)/
       ticket_id = "BZ##{bug_number}"
@@ -38,7 +52,6 @@ module OmniFocus::Bugzilla
         bug_db[project][ticket_id] = true
       else
         url = "http://bugs/show_bug.cgi?id=#{bug_number}"
-        warn "url #{url}"
         details = Nokogiri.parse(mechanize.get("#{url}&ctype=xml").body)
         product = details.root.xpath('//product/text()').text.downcase
         title = details.root.xpath('//short_desc/text()').text
@@ -49,4 +62,5 @@ module OmniFocus::Bugzilla
       end
     end
   end
+
 end
