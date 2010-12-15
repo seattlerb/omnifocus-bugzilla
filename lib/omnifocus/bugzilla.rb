@@ -1,5 +1,5 @@
 module OmniFocus::Bugzilla
-  VERSION = '1.1.0'
+  VERSION = '1.1.1'
 
   def load_or_create_config
     path   = File.expand_path "~/.omnifocus-bugzilla.yml"
@@ -8,7 +8,7 @@ module OmniFocus::Bugzilla
     unless config then
       config = {
         :username => "USERNAME",
-        :bugzilla_url => "http://example.com/cgi-bin/buglist.cgi"
+        :bugzilla_url => "http://example.com/"
       }
 
       File.open(path, "w") { |f|
@@ -25,7 +25,7 @@ module OmniFocus::Bugzilla
     config       = load_or_create_config
     bugzilla_url = config[:bugzilla_url]
     username     = config[:username]
-    default_query = "bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&emailassigned_to1=1&emailtype1=substring&email1=#{username}"
+    default_query = "cgi-bin/buglist.cgi?bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&emailassigned_to1=1&emailtype1=substring&email1=#{username}"
 
     unless config[:queries]
       process_query_results(bugzilla_url, default_query)
@@ -51,7 +51,7 @@ module OmniFocus::Bugzilla
         project = existing[ticket_id]
         bug_db[project][ticket_id] = true
       else
-        url = "http://bugs/show_bug.cgi?id=#{bug_number}"
+        url = "#{bugzilla_url}show_bug.cgi?id=#{bug_number}"
         details = Nokogiri.parse(mechanize.get("#{url}&ctype=xml").body)
         product = details.root.xpath('//product/text()').text.downcase
         title = details.root.xpath('//short_desc/text()').text
