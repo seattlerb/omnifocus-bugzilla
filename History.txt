@@ -1,3 +1,6 @@
+=== 1.1.1 / 2010-12-14
+* Fixed a hardcoded url
+
 === 1.1.0 / 2009-09-29
 
 * Added support for multiple bugzilla queries on the same bugzilla server.
