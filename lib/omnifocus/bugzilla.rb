@@ -1,5 +1,6 @@
 module OmniFocus::Bugzilla
   VERSION = '1.1.1'
+  PREFIX  = "BZ"
 
   def load_or_create_config
     path   = File.expand_path "~/.omnifocus-bugzilla.yml"
@@ -45,7 +46,7 @@ module OmniFocus::Bugzilla
 
     bugs.each do |bug|
       bug_number = $1 if bug.inner_html =~ /show_bug.cgi\?id=(\d*)/
-      ticket_id = "BZ##{bug_number}"
+      ticket_id = "#{PREFIX}##{bug_number}"
 
       if existing[ticket_id]
         project = existing[ticket_id]
