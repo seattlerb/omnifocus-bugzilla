@@ -22,9 +22,11 @@ in bugzilla and then paste the portion of the url after the question mark into
 the config file.
 
 Example:
-:bugzilla_url: http://bugs/buglist.cgi
-:username: aja
-:queries: ["bug_status=NEW", "bug_status=CLOSED"]
+
+    ---
+    bugzilla_url: http://bugs/buglist.cgi
+    username: aja
+    queries: ["bug_status=NEW", "bug_status=CLOSED"]
 
 == FEATURES/PROBLEMS:
 
