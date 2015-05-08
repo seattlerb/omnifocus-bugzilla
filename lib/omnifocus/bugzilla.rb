@@ -1,5 +1,5 @@
 module OmniFocus::Bugzilla
-  VERSION = '1.1.3'
+  VERSION = '1.1.4'
   PREFIX  = "BZ"
 
   def load_or_create_config
